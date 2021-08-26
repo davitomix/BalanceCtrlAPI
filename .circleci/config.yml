@@ -14,16 +14,14 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: postgres
       - image: circleci/postgres:12
+        environment:
+          POSTGRES_PASSWORD: password
     steps:
       - checkout
       - ruby/install-deps
       - ruby/rubocop-check:
           format: progress
           label: Inspecting with Rubocop
-
-      - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       - run: sudo apt install -y postgresql-client || true
 
