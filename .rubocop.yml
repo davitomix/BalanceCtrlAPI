@@ -9,7 +9,6 @@ AllCops:
     - db/seeds/*
     - Guardfile
     - spec/factories/*
-    - lib/fsmb/pdc_client.rb
     - vendor/**/*
   NewCops:
     enable
