@@ -4,20 +4,30 @@ orbs:
 
 jobs:
   test:
+    parallelism: 3
     docker:
       - image: circleci/ruby:2.7.3
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD
+      - image: circleci/postgres:12
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD
         environment:
+          POSTGRES_USER: circleci-demo-ruby
+          POSTGRES_DB: rails_blog_test
+          POSTGRES_PASSWORD: ""
+
+    environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
           ALLOWED_ORIGINS: '*'
-          RAILS_ENV: test
           PGHOST: 127.0.0.1
-          PGUSER: root
-      - image: circleci/postgres:12
-        environment:
-          POSTGRES_USER: root
-          POSTGRES_DB: circle-test_test
-          POSTGRES_PASSWORD: password
+          PGUSER: circleci-demo-ruby
+          PGPASSWORD: ""
+          RAILS_ENV: test
+
     steps:
       - checkout
       - ruby/install-deps
@@ -26,8 +36,8 @@ jobs:
           label: Inspecting with Rubocop
 
       - run:
-          name: Install dependencies
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       - run: sudo apt install -y postgresql-client || true
 
