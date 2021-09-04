@@ -16,22 +16,6 @@ test:
   database: balance-control-api_test
   password: <%= ENV['POSTGRES_TEST_DB_PASSWORD'] %>
 
-staging:
-  <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-  port: <%= ENV['DB_PORT'] %>
-
-integration:
-  <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-  port: <%= ENV['DB_PORT'] %>
-
 production:
   <<: *default
   database: <%= ENV['DB_NAME'] %>
