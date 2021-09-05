@@ -1,5 +1,5 @@
 Rails.application.configure do
-  # config.cache_store = :redis_store, "redis://#{ENV['REDIS_ENDPOINT']}:6379/0"
+  config.cache_store = :redis_store, "redis://#{ENV['REDIS_ENDPOINT']}:6379/0"
   config.session_store :redis_store, servers: [
     { host: ENV['REDIS_ENDPOINT'], port: 6379, db: 1 }
   ], key: ENV['APP_SESSION_KEY']
