@@ -15,6 +15,8 @@ gem 'raddocs'
 gem 'rails', '~> 6.1', '>= 6.1.1'
 gem 'rspec_api_documentation'
 gem 'rswag'
+gem 'redis'
+gem 'hiredis'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

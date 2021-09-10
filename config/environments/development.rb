@@ -13,9 +13,13 @@ Rails.application.configure do
 
   # rubocop:disable Rails/FilePath
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
+    config.cache_store = :redis_cache_store, {
+      url: "redis://#{ENV['REDIS_ENDPOINT']}:6379/0"
+    }
+    config.session_store = :redis_cache_store, {
+      url: "redis://#{ENV['REDIS_ENDPOINT']}:6379/1"
+    }
     config.action_controller.perform_caching = true
-
-    config.cache_store = :memory_store
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
